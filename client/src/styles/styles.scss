@@ -1,0 +1,11 @@
+@import '~normalize.css/normalize.css';
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import './components//header';
+@import './components/posts';
+@import './components/post';
+
+* {
+    font-family: 'Roboto', sans-serif;
+    font-size: 62.5%;
+}

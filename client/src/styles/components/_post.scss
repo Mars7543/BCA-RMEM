@@ -1,0 +1,116 @@
+.post {
+    width: 75vw;
+    margin: 3.6rem auto;
+    border: 1px solid #BDBDBD;
+    border-radius: 10px;
+
+}
+
+.post__img {
+    width: 100%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    margin-bottom: 1.2rem;
+}
+
+.post__content {
+    padding: 35px;
+}
+
+.post__info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.8rem;
+}
+
+.post__info__container {
+    display: flex;
+    flex-direction: column;
+}
+
+.post__info__container__creator {
+    margin: 0;
+    text-align: left;
+    font-size: 1.2rem;
+}
+
+.post__info__container__date {
+    margin: .5rem 0 0 0;
+    font-size: 1.2rem;
+    color: grey;
+}
+
+.post__info__icon {
+    font-size: 4rem;
+    margin-right: 1rem;
+}
+
+.post__body {
+    text-align: left;
+}
+
+.post__body__title {
+    font-size: 3.6rem;
+    font-weight: 300;
+    margin: 1rem 0;
+}
+
+@mixin multiLineEllipsis($lineHeight: 1.2em, $lineCount: 1){
+    overflow: hidden;
+    position: relative;
+    line-height: $lineHeight;
+    max-height: $lineHeight * $lineCount; 
+    text-align: justify;
+    margin-right: -1em;
+    padding-right: 1em;
+    &:before {
+      content: '...';
+      position: absolute;
+      right: 0;
+      bottom: 0;
+    }
+    &:after {
+      content: '';
+      position: absolute;
+      right: 0;
+      width: 1em;
+      height: 1em;
+      margin-top: 0.2em;
+    }
+  }
+
+.post__body__content {
+    
+    max-height: 100px;
+    text-overflow: ellipsis;
+    font-size: 1.5rem;
+    font-weight: 300;
+    @include multiLineEllipsis($lineHeight: 1.5em, $lineCount: 2);
+}
+
+.post__divider {
+    margin: 2.4rem 0;
+    width: 100%;
+    color: #BDBDBD;
+}
+
+.post__extra {
+    display: flex;
+    justify-content: space-between;
+    font-size: 2rem;
+    color: grey;
+}
+
+.post__extra__comment {
+    cursor: pointer;
+    transition: 100ms color ease-in;
+}
+
+.post__extra__comment:hover {
+    color: #424242;
+}
+
+.post__extra__likes {
+    color: #F44336;
+    cursor: pointer;
+}

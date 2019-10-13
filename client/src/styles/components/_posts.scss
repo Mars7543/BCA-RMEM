@@ -1,0 +1,23 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    
+    justify-content: center;
+    text-align: center;
+}
+
+.main__header {
+    margin-top: 2.4rem;
+}
+
+.main__header__title {
+    font-size: 6rem;
+    text-transform: uppercase;
+    font-weight: 300;
+}
+
+.main__header__subtitle {
+    font-size: 2.4rem;
+    font-weight: 300;
+    padding: 0 1.8rem;
+}

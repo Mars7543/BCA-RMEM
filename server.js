@@ -22,5 +22,5 @@ server.use('/api/posts', require('./routes/api/posts'))
 server.use('/api/comments', require('./routes/api/comments'))
 
 // start server
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 8000
 server.listen(port, () => console.log(`Server running on port ${port}...`))

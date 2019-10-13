@@ -1,0 +1,30 @@
+{
+    "name": "bca-rmem",
+    "version": "1.0.0",
+    "description": "Bergen County Academies' Relief for Middle Eastern Minorities",
+    "main": "server.js",
+    "scripts": {
+        "client-install": "npm install --prefix client",
+        "start": "node server.js",
+        "server": "nodemon server.js --ignore 'client'",
+        "client": "npm start --prefix client",
+        "dev": "concurrently \"npm run server\" \"npm run client\""
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Mars7543/BCA-RMEM.git"
+    },
+    "author": "Miguel Roberts",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/Mars7543/BCA-RMEM/issues"
+    },
+    "homepage": "https://github.com/Mars7543/BCA-RMEM#readme",
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "concurrently": "^5.0.0",
+        "dotenv": "^8.1.0",
+        "express": "^4.17.1",
+        "mongoose": "^5.7.4"
+    }
+}

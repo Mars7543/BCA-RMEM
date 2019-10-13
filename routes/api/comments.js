@@ -11,7 +11,7 @@ router.post('/:post_id', auth, async (req, res) => {
     if (!post) return res.status(404).json({ msg: 'Post not found' })
 
     try {
-        const comment = await Comment.create({ comment: req.body.comment, user_id: req.user.id })
+        const comment = await Comment.create({ comment: req.body.comment, user: req.user.id })
         post.comments.push(comment._id)
         await post.save()
         return res.json(comment)
@@ -28,7 +28,7 @@ router.delete('/:post_id/:comment_id', auth, async (req, res) => {
     try {
         const { post_id, comment_id } = req.params
 
-        const comment = await Comment.findOne({ _id: comment_id, user_id: req.user.id, })
+        const comment = await Comment.findOne({ _id: comment_id, user: req.user.id, })
         const post = await Post.findById(post_id)
 
         if (!comment || !post) return res.status(404).json()

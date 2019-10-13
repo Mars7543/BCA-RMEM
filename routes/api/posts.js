@@ -6,7 +6,7 @@ const auth = require('../../middleware/auth')
 // @desc    Get All Posts
 // @access  Public
 router.get('/', async (req, res) => {
-    const posts = await Post.find().populate('comments').exec()
+    const posts = await Post.find().populate('comments').populate('user').exec()
     res.json(posts)
 })
 
@@ -20,7 +20,7 @@ router.post('/', auth, async (req, res) => {
             title,
             body,
             image,
-            user_id: req.user.id
+            user: req.user.id
         })
 
         return res.json(post)
@@ -52,7 +52,7 @@ router.put('/:id', auth, async (req, res) => {
     if (!isValidOperation) return res.status(400).send({ error : "Invalid Updates" })
 
     try {
-        const post = await Post.findOne({ _id: req.params.id, user_id: req.user.id })
+        const post = await Post.findOne({ _id: req.params.id, user: req.user.id })
         if (!post) return res.status(404).send()
 
         updates.forEach((update) => post[update] = req.body[update])
@@ -70,7 +70,7 @@ router.put('/:id', auth, async (req, res) => {
 // @access  Protected
 router.delete('/:id', auth, async (req, res) => {
     try {
-        const post = await Post.findOne({ _id: req.params.id, user_id: req.user.id })
+        const post = await Post.findOne({ _id: req.params.id, user: req.user.id })
         if (!post) return res.status(404).json()
         
         await post.remove()
