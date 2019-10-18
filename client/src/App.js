@@ -1,20 +1,38 @@
-import React, { Component } from 'react'
+import React from 'react'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
-import Header from './components/Header'
-import Posts from './components/Posts'
-import Footer from './components/Footer'
+import Header from './components/partials/Header'
+import Footer from './components/partials/Footer'
 
-class App extends Component {
-    state = {  }
-    render() { 
-        return ( 
-            <div>
-                <Header />
-                <Posts />
-                <Footer />
-            </div>
-        );
-    }
+import Posts from './components/Posts/Posts'
+import Post from './components/Post/Post'
+
+import Login from './components/auth/Login'
+import Register from './components/auth/Register'
+
+import Create from './components/Create'
+
+import About from './components/About'
+import Contact from './components/Contact'
+
+const App = () => {
+    return ( 
+        <Router>
+            <Header />
+                <Route path="/" exact={true} component={Posts} />
+                <Route path="/posts" exact={true} component={Posts} />
+                <Route path="/posts/:id" exact={true} component={Post} />
+                
+                <Route path="/login" component={Login} />
+                <Route path="/register" component={Register} />
+
+                <Route path="/create" component={Create} />
+
+                <Route path="/about" component={About} />
+                <Route path="/contact" component={Contact} />
+            <Footer />
+        </Router>
+    )
 }
  
 export default App

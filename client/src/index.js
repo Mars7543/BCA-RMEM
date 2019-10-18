@@ -1,11 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './styles/styles.scss';
-import App from './App';
+import React from 'react'
+import ReactDOM from 'react-dom'
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import './styles/styles.scss'
 
-// TODO: Make Posts Link to Actual Posts Page
+import App from './App'
+
+ReactDOM.render(<App />, document.getElementById('root'))
+
 // TODO: Add Front End Auth (Register / Login)
 // TODO: Add Create Posts Page / Delete Posts Page
 // TODO: Add Views / Likes / Comments to Posts
+// TODO: Show Comments in Individual Post Pages
+// TODO: Add Contact Us Form & Footer

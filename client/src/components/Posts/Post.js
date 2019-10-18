@@ -1,25 +1,26 @@
-import React from 'react';
-import moment from 'moment';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import moment from 'moment'
 
-const Post = ({ post }) => {
+const Post = ({ post: { _id: id, image, user, postDate, title, body } }) => {
     return (  
         <div className="post">
-            <img src={post.image} className="post__img"/>
+            <Link to={`/posts/${id}`}><img src={image} alt="" className="post__img"/></Link>
             
             <div className="post__content">
                 <div className="post__info">
                     <i className="post__info__icon material-icons">account_circle</i>
                     <div className="post__info__container">
-                        <p className="post__info__container__creator">{post.user.username}</p>
+                        <p className="post__info__container__creator">{user.username}</p>
                         <p className="post__info__container__date">
-                            {moment(post.postDate).fromNow()}
+                            {moment(postDate).fromNow()}
                         </p>
                     </div>
                 </div>
 
                 <div className="post__body">
-                    <h1 className="post__body__title">{post.title}</h1>
-                    <p className="post__body__content">{post.body}</p>
+                    <Link to={`/posts/${id}`} className="post__body__title">{title}</Link>
+                    <p className="post__body__content">{body}</p>
                 </div>
 
                 <hr className="post__divider" />

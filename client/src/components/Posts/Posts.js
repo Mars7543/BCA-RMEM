@@ -10,10 +10,7 @@ class Posts extends Component {
 
     componentDidMount() {
         axios.get('/api/posts')
-            .then(res => this.setState(_ => { 
-                console.log(res.data)
-                return { posts: res.data }
-            }))
+            .then(res => this.setState(_ => ({ posts: res.data })))
             .catch(err => console.log(err))
     }
 
@@ -31,7 +28,7 @@ class Posts extends Component {
                     )}
                 </div>
             </main>
-         ); 
+         )
     }
 }
  

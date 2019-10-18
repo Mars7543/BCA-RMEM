@@ -35,7 +35,7 @@ router.post('/', auth, async (req, res) => {
 // @desc    Get Post by ID
 // @access  Public
 router.get('/:id', async (req, res) => {
-    const post = await Post.findById(req.params.id).populate('comments').exec()
+    const post = await Post.findById(req.params.id).populate('comments user').exec()
 
     if (!post) return res.json({ msg: 'Post not found' })
     res.json(post)

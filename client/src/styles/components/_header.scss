@@ -28,13 +28,8 @@ nav {
     background-color: #0288D1;
     display: flex;
     align-items: center;
-}
-
-.nav__items {
-    display: flex;
-    flex-direction: row;
-
-    list-style: none;
+    justify-content: space-between;
+    padding: 0 3.6rem;
 }
 
 .nav__item {
@@ -43,7 +38,8 @@ nav {
     cursor: pointer;
     color: white;
 
-    transition: 200ms color;
+    transition: 100ms color;
+    text-decoration: none;
 }
 
 .nav__item:hover {
