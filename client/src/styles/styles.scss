@@ -4,9 +4,13 @@
 @import './base';
 @import './components/header';
 @import './components/footer';
+@import './components/about';
 @import './components/posts/posts';
 @import './components/posts/post';
 @import './components/post/post';
+@import './components/register';
+@import './components/login';
+@import './components/create';
 
 * {
     font-family: 'Roboto', sans-serif;

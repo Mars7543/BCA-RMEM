@@ -48,7 +48,10 @@ class Post extends Component {
                         </div>
 
                         <img className="full_post__image" src={image} alt="" />
-                        <p className="full_post__body">{body}</p>
+                        
+                        { body.split('\n').map((paragraph, i) => 
+                            <p className="full_post__body" key={i}>{ paragraph }</p>
+                        )}
                     </div>
                 </div>
             )

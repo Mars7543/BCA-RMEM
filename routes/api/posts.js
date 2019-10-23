@@ -2,11 +2,16 @@ const Post = require('../../models/Post')
 const router = require('express').Router()
 const auth = require('../../middleware/auth')
 
+// router.get('/delete', async (req, res) => {
+//     const d = await Post.deleteMany({ title: "Title" })
+//     res.json(d)
+// })
+
 // @route   GET /api/posts
 // @desc    Get All Posts
 // @access  Public
 router.get('/', async (req, res) => {
-    const posts = await Post.find().populate('comments').populate('user').exec()
+    const posts = await Post.find().populate('user').exec()
     res.json(posts)
 })
 
@@ -35,7 +40,7 @@ router.post('/', auth, async (req, res) => {
 // @desc    Get Post by ID
 // @access  Public
 router.get('/:id', async (req, res) => {
-    const post = await Post.findById(req.params.id).populate('comments user').exec()
+    const post = await Post.findById(req.params.id).populate('user').exec()
 
     if (!post) return res.json({ msg: 'Post not found' })
     res.json(post)

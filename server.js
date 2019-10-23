@@ -19,7 +19,6 @@ mongoose
 server.use('/api/users', require('./routes/api/users'))
 server.use('/api/auth', require('./routes/api/auth'))
 server.use('/api/posts', require('./routes/api/posts'))
-server.use('/api/comments', require('./routes/api/comments'))
 
 // start server
 const port = process.env.PORT || 8000

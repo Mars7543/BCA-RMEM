@@ -22,20 +22,6 @@ const Post = ({ post: { _id: id, image, user, postDate, title, body } }) => {
                     <Link to={`/posts/${id}`} className="post__body__title">{title}</Link>
                     <p className="post__body__content">{body}</p>
                 </div>
-
-                <hr className="post__divider" />
-
-                <div className="post__extra">
-                    <div className="post__extra__views">
-                        0 views
-                    </div>
-                    <div className="post__extra__comment">
-                        Write a comment
-                    </div>
-                    <div className="post__extra__likes">
-                        <i className="material-icons">favorite_border</i>
-                    </div>
-                </div>
             </div>
         </div>
     );

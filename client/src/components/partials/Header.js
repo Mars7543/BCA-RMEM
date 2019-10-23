@@ -18,13 +18,11 @@ class Header extends Component {
                     <div className="nav__main_items">
                         <Link to="/posts" className="nav__item">Home</Link>
                         <Link to="/about" className="nav__item">About Us</Link>
-                        <Link to="/contact" className="nav__item">Contact</Link>
                     </div>
-                    <div className="nav__auth_items">
-                        {
-                            // <Link to="/login" className="nav__item">Login</Link>
-                            // <Link to="/register" className="nav__item">Register</Link>
-                        }
+                    <div className="nav__auth_items">    
+                        <Link to="/login" className="nav__item">Login</Link>
+                        <Link to="/register" className="nav__item">Register</Link>
+                        
                         <Link to="/create" className="nav__item">Create</Link> { /** TODO: Make this a FAB - Materialize */}
                     </div>
                 </nav>

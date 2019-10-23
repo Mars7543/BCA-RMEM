@@ -13,7 +13,6 @@ import Register from './components/auth/Register'
 import Create from './components/Create'
 
 import About from './components/About'
-import Contact from './components/Contact'
 
 const App = () => {
     return ( 
@@ -29,10 +28,9 @@ const App = () => {
                 <Route path="/create" component={Create} />
 
                 <Route path="/about" component={About} />
-                <Route path="/contact" component={Contact} />
             <Footer />
         </Router>
     )
 }
- 
+
 export default App

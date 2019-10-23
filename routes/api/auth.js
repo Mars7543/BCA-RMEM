@@ -10,7 +10,7 @@ const jwt       = require('jsonwebtoken')
 router.post('/', async (req, res) => {
     const { username, password } = req.body
 
-    // Simply validation
+    // Simple validation
     if (!username || !password)
         return res.status(400).json({ msg: 'Please enter all fields' })
     
