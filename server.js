@@ -17,8 +17,8 @@ mongoose
     .catch(err => console.log(`Error connecting to MongoDB:\n${err}`))
 
 // use routes
-server.use('/api/users', require('./routes/api/users'))
-server.use('/api/auth', require('./routes/api/auth'))
+// server.use('/api/users', require('./routes/api/users'))
+// server.use('/api/auth', require('./routes/api/auth'))
 server.use('/api/posts', require('./routes/api/posts'))
 
 // serve static assets if in production
