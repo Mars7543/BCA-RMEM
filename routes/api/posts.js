@@ -11,7 +11,11 @@ const auth = require('../../middleware/auth')
 // @desc    Get All Posts
 // @access  Public
 router.get('/', async (req, res) => {
-    const posts = await Post.find().populate('user').exec()
+    const posts = await Post
+                            .find()
+                            .sort({ postDate: -1 })
+                            .populate('user')
+                            .exec()
     res.json(posts)
 })
 
@@ -31,7 +35,7 @@ router.post('/', auth, async (req, res) => {
         return res.json(post)
     } catch(err) {
         console.log(err)
-        res.status(400).json({ msg: 'Error creating post' })
+        res.status(400).json({ msg: 'Error Creating Post' })
     }
 })
 
@@ -42,7 +46,7 @@ router.post('/', auth, async (req, res) => {
 router.get('/:id', async (req, res) => {
     const post = await Post.findById(req.params.id).populate('user').exec()
 
-    if (!post) return res.json({ msg: 'Post not found' })
+    if (!post) return res.json({ msg: 'Post Not Found' })
     res.json(post)
 })
 
@@ -82,7 +86,7 @@ router.delete('/:id', auth, async (req, res) => {
         res.json({ msg: 'Deleted Post' })
     } catch(err) {
         console.log(err)
-        res.status(500).send({ msg: 'Error deleting post' })
+        res.status(500).send({ msg: 'Error Deleting Post' })
     }
 })
 

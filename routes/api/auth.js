@@ -2,6 +2,7 @@ const User      = require('../../models/User')
 const router    = require('express').Router()
 const bcrypt    = require('bcryptjs')
 const jwt       = require('jsonwebtoken')
+const auth      = require('../../middleware/auth')
 
 // @route   POST /api/auth
 // @desc    Authenticate User
@@ -12,11 +13,11 @@ router.post('/', async (req, res) => {
 
     // Simple validation
     if (!username || !password)
-        return res.status(400).json({ msg: 'Please enter all fields' })
+        return res.status(400).json({ msg: 'Please Enter All Fields' })
     
     // Check for existing user
     const user = await User.findOne({ username })
-    if (!user) return res.status(400).json({ msg: 'User does not exist' })
+    if (!user) return res.status(400).json({ msg: 'User Does Not Exist' })
 
     try {
         const isMatched = await bcrypt.compare(password, user.password)
@@ -34,8 +35,17 @@ router.post('/', async (req, res) => {
         })
 
     } catch(err) {
-        res.status(500).json({ msg: 'Error Authenticating User'})
+        res.status(500).json({ msg: 'Error Authenticating User' })
     }
 })
+
+// @route   GET api/auth/user
+// @desc    Get user data
+// @access  Private
+router.get('/user', auth, (req, res) => {
+    User.findById(req.user.id)
+      .select('-password')
+      .then(user => res.json(user));
+});  
 
 module.exports = router

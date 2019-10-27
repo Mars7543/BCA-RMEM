@@ -1,11 +1,37 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
-import axios from 'axios'
+
+import { connect } from 'react-redux'
+import { login } from '../../actions/authActions'
+import { clearErrors } from '../../actions/errorActions'
+
+import PropTypes from 'prop-types'
 
 class Login extends Component {
+    static propTypes = {
+        isAuthenticated: PropTypes.bool.isRequired,
+        error: PropTypes.object.isRequired,
+        clearErrors: PropTypes.func.isRequired
+    }
+
     state = { 
         error: '',
         redirect: false 
+    }
+
+    componentDidUpdate(prevProps) {
+        const { error, isAuthenticated } = this.props
+
+        if (prevProps.error !== error)
+            if (error.id === 'LOGIN_FAIL')
+                this.setState(() => ({ error: error.msg }))
+
+        if (isAuthenticated)
+            this.setState(() => ({ redirect: true }))
+    }
+
+    componentWillUnmount() {
+        this.props.clearErrors()
     }
 
     handleSubmit = e => {
@@ -14,21 +40,7 @@ class Login extends Component {
         const username = e.target[0].value
         const password = e.target[1].value
 
-        if (!username || !password)
-            return this.setState(() => ({ error: 'Please Fill Out All Fields.' }))
-
-        axios.post('/api/auth', {
-            username,
-            password
-        })
-        .then(res => {
-            console.log(res)
-            this.setState(() => ({ redirect: true }))
-        })
-        .catch(err => {
-            console.log(err) 
-            this.setState(() => ({ error: err.response.data.msg }))
-        })
+        this.props.login({ username, password })
     }
 
     render() { 
@@ -57,5 +69,9 @@ class Login extends Component {
         );
     }
 }
- 
-export default Login
+
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    error: state.error
+})
+export default connect(mapStateToProps, { login, clearErrors })(Login)

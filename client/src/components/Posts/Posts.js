@@ -1,17 +1,12 @@
-import axios from 'axios'
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { getPosts } from '../../actions/postActions'
+import PropTypes from 'prop-types'
 import Post from './Post'
 
 class Posts extends Component {
-    constructor(props) {
-        super(props)
-        this.state = { }
-    }
-
     componentDidMount() {
-        axios.get('/api/posts')
-            .then(res => this.setState(_ => ({ posts: res.data })))
-            .catch(err => console.log(err))
+        this.props.getPosts()
     }
 
     render() {
@@ -23,7 +18,7 @@ class Posts extends Component {
                 </div>
 
                 <div className="main__posts">
-                    {this.state.posts && this.state.posts.map(post => 
+                    {this.props.posts && this.props.posts.map(post => 
                         <Post key={post._id} post={post} />
                     )}
                 </div>
@@ -32,4 +27,13 @@ class Posts extends Component {
     }
 }
 
-export default Posts
+Posts.propTypes = {
+    getPosts: PropTypes.func.isRequired,
+    posts: PropTypes.array.isRequired
+}
+
+const mapStateToProps = state => ({
+    posts: state.post.posts
+})
+
+export default connect(mapStateToProps, { getPosts })(Posts)

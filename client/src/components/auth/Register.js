@@ -1,11 +1,36 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
-import axios from 'axios'
 
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import { register } from '../../actions/authActions'
+import { clearErrors } from '../../actions/errorActions'
 class Register extends Component {
+    static propTypes = {
+        isAuthenticated: PropTypes.bool,
+        error: PropTypes.object,
+        register: PropTypes.func.isRequired,
+        clearErrors: PropTypes.func.isRequired
+    }
+
     state = { 
         error: '',
         redirect: false 
+    }
+
+    componentDidUpdate(prevProps) {
+        const { error, isAuthenticated } = this.props
+
+        if (error !== prevProps.error) 
+            if (error.id === 'REGISTER_FAIL')
+                this.setState(() => ({ error: error.msg }))
+        
+        if (isAuthenticated)
+            this.setState(() => ({ redirect: true }))
+    }
+
+    componentWillUnmount() {
+        this.props.clearErrors()
     }
 
     handleSubmit = e => {
@@ -19,25 +44,9 @@ class Register extends Component {
         const username = e.target[3].value
         const password = e.target[4].value
 
-        if (!firstName || !lastName || !email || !username || !password)
-            return this.setState(() => ({ error: 'Please Fill Out All Fields' }))
-
         const name = `${firstName} ${lastName}`
 
-        axios.post('/api/users', { 
-            name,
-            email,
-            username,
-            password
-        })
-        .then(res => {
-            console.log(res)
-            this.setState(() => ({ redirect: true }))
-        })
-        .catch(err => {
-            console.log(err.response)
-            this.setState(() => ({ error: err.response.data.msg }))
-        })
+        this.props.register({ name, email, username, password })
     }
 
     render() { 
@@ -76,11 +85,16 @@ class Register extends Component {
                         </div>
                     </div>
 
-                    <button className="register__btn">Login</button>
+                    <button className="register__btn">Register</button>
                 </form>
             </div>
         );
     }
 }
- 
-export default Register
+
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    error: state.error
+})
+
+export default connect(mapStateToProps, { register, clearErrors })(Register)
