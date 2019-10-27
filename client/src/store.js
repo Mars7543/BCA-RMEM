@@ -6,13 +6,11 @@ const initialState = {}
 
 const middleWare = [thunk]
 
+const c = process.env.NODE_ENV === 'development' ? compose(applyMiddleware(...middleWare), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() ) : compose(applyMiddleware(...middleWare))
 const store = createStore(
     rootReducer, 
     initialState, 
-    compose(
-        applyMiddleware(...middleWare),
-        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-    )
+    c
 )
 
 export default store
