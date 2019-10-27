@@ -1,5 +1,6 @@
 const express   = require('express')
 const mongoose  = require('mongoose')
+const path      = require('path')
 
 // env config
 require('dotenv').config()
@@ -19,6 +20,15 @@ mongoose
 server.use('/api/users', require('./routes/api/users'))
 server.use('/api/auth', require('./routes/api/auth'))
 server.use('/api/posts', require('./routes/api/posts'))
+
+// serve static assets if in production
+if (process.env.NODE_ENV === 'production') {
+    server.use(express.static('client/build'))
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+    })
+}
 
 // start server
 const port = process.env.PORT || 8000
