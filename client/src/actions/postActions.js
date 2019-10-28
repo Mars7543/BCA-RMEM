@@ -21,7 +21,7 @@ export const addPost = post => dispatch => {
     if (!title || !image || !body) return dispatch(showError('Please Fill Out All Fields.'))
 
     axios
-        .post('/api/posts', post, tokenConfig)
+        .post('/api/posts', post, tokenConfig())
         .then(res => 
             dispatch({
                 type: ADD_POST,
