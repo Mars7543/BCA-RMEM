@@ -15,13 +15,13 @@ export const getPosts = () => dispatch => {
         .catch(err => dispatch(showError(err.response.data.msg)))
 }
 
-export const addPost = post => dispatch => {
+export const addPost = post => (dispatch, getState) => {
     const { title, image, body } = post
 
     if (!title || !image || !body) return dispatch(showError('Please Fill Out All Fields.'))
 
     axios
-        .post('/api/posts', post, tokenConfig())
+        .post('/api/posts', post, tokenConfig(getState))
         .then(res => 
             dispatch({
                 type: ADD_POST,
