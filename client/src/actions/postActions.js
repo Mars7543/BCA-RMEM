@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { GET_POSTS, ADD_POST, POSTS_LOADING, SHOW_ERROR } from './types'
+import { tokenConfig } from './authActions'
 
 export const getPosts = () => dispatch => {
     dispatch(setPostsLoading)
@@ -19,15 +20,8 @@ export const addPost = post => dispatch => {
 
     if (!title || !image || !body) return dispatch(showError('Please Fill Out All Fields.'))
 
-    const config = {
-        headers: {
-            'Content-type': 'application/json',
-            'x-auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkYWUwOGJkNTA4OTg3MmMxNzQwMmE2YSIsImlhdCI6MTU3MTY4NjU4OX0.aY4E4OMXs4Cvdz4moy1cjzfZvmHbWL7zh4JbOi73djI'
-        }
-    }
-
     axios
-        .post('/api/posts', post, config)
+        .post('/api/posts', post, tokenConfig)
         .then(res => 
             dispatch({
                 type: ADD_POST,
