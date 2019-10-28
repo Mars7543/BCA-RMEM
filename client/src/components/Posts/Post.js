@@ -12,7 +12,8 @@ const Post = ({ post: { _id: id, image, user, postDate, title, body } }) => {
         let date = `${m.format('MMM')} ${day}`
 
         const year = m.format('YYYY')
-        if (year !== '2019') date += (', ' + year)
+        const curYear = moment(Date.now()).format('YYYY')
+        if (year !== curYear) date += (', ' + year)
         
         return date
     }
