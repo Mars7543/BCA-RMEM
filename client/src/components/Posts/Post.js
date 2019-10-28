@@ -3,6 +3,20 @@ import { Link } from 'react-router-dom'
 import moment from 'moment'
 
 const Post = ({ post: { _id: id, image, user, postDate, title, body } }) => {
+    const formatDate = () => {
+        const m = moment(postDate)
+
+        let day = m.format('DD')
+        if (day[0] === '0') day = day[1]
+        
+        let date = `${m.format('MMM')} ${day}`
+
+        const year = m.format('YYYY')
+        if (year !== '2019') date += (', ' + year)
+        
+        return date
+    }
+    
     return (  
         <div className="post">
             <Link to={`/posts/${id}`}><img src={image} alt="" className="post__img"/></Link>
@@ -13,7 +27,7 @@ const Post = ({ post: { _id: id, image, user, postDate, title, body } }) => {
                     <div className="post__info__container">
                         <p className="post__info__container__creator">{user.username}</p>
                         <p className="post__info__container__date">
-                            {moment(postDate).fromNow()}
+                            {formatDate()}
                         </p>
                     </div>
                 </div>
