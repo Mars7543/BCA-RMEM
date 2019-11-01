@@ -17,15 +17,15 @@
     padding: 35px;
 }
 
+.post__info_actions__container {
+    display: flex;
+    justify-content: space-between;
+}
+
 .post__info {
     display: flex;
     align-items: center;
     margin-bottom: 1.8rem;
-}
-
-.post__info__container {
-    display: flex;
-    flex-direction: column;
 }
 
 .post__info__container__creator {
@@ -44,6 +44,14 @@
 .post__info__icon {
     font-size: 4rem;
     margin-right: 1rem;
+}
+
+.post__info__icon-delete {
+    font-size: 3.5rem;
+    margin-right: 1rem;
+    color: #C62828;
+    cursor: pointer;
+    text-align: right;
 }
 
 .post__body {

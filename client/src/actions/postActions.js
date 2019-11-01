@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { GET_POSTS, ADD_POST, POSTS_LOADING, SHOW_ERROR } from './types'
+import { GET_POSTS, ADD_POST, DELETE_POST, POSTS_LOADING, SHOW_ERROR } from './types'
 import { tokenConfig } from './authActions'
 
 export const getPosts = () => dispatch => {
@@ -27,6 +27,18 @@ export const addPost = post => (dispatch, getState) => {
                 type: ADD_POST,
                 payload: res.data
             })    
+        )
+        .catch(err => dispatch(showError(err.response.data.msg)))
+}
+
+export const deletePost = postId => (dispatch, getState) => {
+    axios
+        .delete(`/api/posts/${postId}`, tokenConfig(getState))
+        .then(res =>
+            dispatch({
+                type: DELETE_POST,
+                payload: { _id: postId }
+            })
         )
         .catch(err => dispatch(showError(err.response.data.msg)))
 }

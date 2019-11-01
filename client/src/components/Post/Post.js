@@ -22,11 +22,18 @@ class Post extends Component {
     }
 
     formatPostDate() {
-        const date = moment(this.state.post.postDate)
-        const year = date.format("YYYY")
+        const m = moment(this.state.post.postDate)
+
+        let day = m.format('DD')
+        if (day[0] === '0') day = day[1]
         
-        if (year === "2019") return date.format("MMM DD")
-        return date.format("MMM DD, YYYY")
+        let date = `${m.format('MMM')} ${day}`
+
+        const year = m.format('YYYY')
+        const curYear = moment(Date.now()).format('YYYY')
+        if (year !== curYear) date += (', ' + year)
+        
+        return date
     }
 
     render() {

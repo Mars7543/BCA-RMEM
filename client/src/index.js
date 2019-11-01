@@ -7,5 +7,4 @@ import App from './App'
 
 ReactDOM.render(<App />, document.getElementById('root'))
 
-// TODO: Add Redux
-// TODO: Add Edit/Delete Posts Page
+// TODO: Edit Posts Page
