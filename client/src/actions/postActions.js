@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { GET_POSTS, ADD_POST, DELETE_POST, POSTS_LOADING, SHOW_ERROR } from './types'
+import { GET_POSTS, GET_POST, ADD_POST, DELETE_POST, POSTS_LOADING, SHOW_ERROR } from './types'
 import { tokenConfig } from './authActions'
 
 export const getPosts = () => dispatch => {
@@ -9,6 +9,19 @@ export const getPosts = () => dispatch => {
         .then(res => 
             dispatch({
                 type: GET_POSTS,
+                payload: res.data
+            })
+        )
+        .catch(err => dispatch(showError(err.response.data.msg)))
+}
+
+export const getPost = id => dispatch => {
+    dispatch(setPostsLoading)
+    axios
+        .get(`/api/posts/${id}`)
+        .then(res => 
+            dispatch({
+                type: GET_POST,
                 payload: res.data
             })
         )
@@ -30,14 +43,29 @@ export const addPost = post => (dispatch, getState) => {
         )
         .catch(err => dispatch(showError(err.response.data.msg)))
 }
+export const editPost = post => (dispatch, getState) => {
+    const { title, image, body } = post
 
-export const deletePost = postId => (dispatch, getState) => {
+    if (!title || !image || !body) return dispatch(showError('Please Fill Out All Fields.'))
+
     axios
-        .delete(`/api/posts/${postId}`, tokenConfig(getState))
-        .then(res =>
+        .post('/api/posts', post, tokenConfig(getState))
+        .then(res => 
+            dispatch({
+                type: ADD_POST,
+                payload: res.data
+            })    
+        )
+        .catch(err => dispatch(showError(err.response.data.msg)))
+}
+
+export const deletePost = id => (dispatch, getState) => {
+    axios
+        .delete(`/api/posts/${id}`, tokenConfig(getState))
+        .then(() =>
             dispatch({
                 type: DELETE_POST,
-                payload: { _id: postId }
+                payload: { _id: id }
             })
         )
         .catch(err => dispatch(showError(err.response.data.msg)))

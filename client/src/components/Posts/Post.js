@@ -50,7 +50,7 @@ class Post extends Component {
                             </div>
                         </div>
 
-                        { user.username === this.props.user.username &&
+                        {this.props.user && user.username === this.props.user.username &&
                             <div className="post__actions">
                                 <i onClick={this.handleDeletePost} className="post__info__icon-delete material-icons">delete</i>
                             </div>

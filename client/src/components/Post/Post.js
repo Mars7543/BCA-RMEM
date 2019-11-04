@@ -1,28 +1,14 @@
 import React, { Component } from 'react'
-import axios from 'axios'
+import { getPost } from '../../actions/postActions'
+import { connect } from 'react-redux'
 import moment from 'moment'
-
 class Post extends Component {
-    constructor(props) {
-        super(props)
-
-        const id = props.match.params.id;
-
-        this.state = {
-            id
-        }
-    }
-
     componentDidMount() {
-        axios.get(`/api/posts/${this.state.id}`)
-        .then(post => 
-            this.setState(() => ({ post: post.data })
-        ))
-        .catch(err => console.log(err))
+        this.props.getPost(this.props.match.params.id)
     }
 
     formatPostDate() {
-        const m = moment(this.state.post.postDate)
+        const m = moment(this.props.post.postDate)
 
         let day = m.format('DD')
         if (day[0] === '0') day = day[1]
@@ -37,8 +23,8 @@ class Post extends Component {
     }
 
     render() {
-        if (this.state.post) {
-            const { title, body, image, user: { username } } = this.state.post
+        if (this.props.post) {
+            const { title, body, image, user: { username } } = this.props.post
             return (
                 <div className="full_post__main">
                     <div className="full_post">
@@ -68,4 +54,4 @@ class Post extends Component {
     }
 }
  
-export default Post
+export default connect(null, { getPost })(Post)

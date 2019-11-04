@@ -12,6 +12,7 @@ import Login from './components/auth/Login'
 import Register from './components/auth/Register'
 import Logout from './components/auth/Logout'
 import Create from './components/Create'
+import Edit from './components/Edit'
 import About from './components/About'
 
 class App extends Component {
@@ -29,6 +30,7 @@ class App extends Component {
                             <Route path="/logout" component={Logout} />
 
                             <Route path="/create" component={Create} />
+                            <Route path="/edit/:id" component={Edit} />
 
                             <Route path="/about" component={About} />
                         <Footer />
