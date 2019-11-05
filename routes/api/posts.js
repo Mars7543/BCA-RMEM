@@ -24,6 +24,9 @@ router.get('/', async (req, res) => {
 // @access  Protected
 router.post('/', auth, async (req, res) => {
     const { title, body, image } = req.body
+
+    if (!title || !image|| !body) res.status(400).json({ msg: 'Please Fill Out All Fields' })
+
     try {
         const post = await Post.create({
             title,

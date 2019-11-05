@@ -7,6 +7,7 @@ import Post from './Post'
 class Posts extends Component {
     componentDidMount() {
         this.props.getPosts()
+        window.scrollTo(0, 0)
     }
 
     render() {
@@ -18,9 +19,14 @@ class Posts extends Component {
                 </div>
 
                 <div className="main__posts">
-                    {this.props.posts && this.props.posts.map(post => 
-                        <Post key={post._id} post={post} />
-                    )}
+                    {this.props.posts && this.props.posts.map(post => {
+                        if (post.user.username === "migbob20") // don't display test posts in production
+                            return (process.env.NODE_ENV === 'development') 
+                                    ? <Post key={post._id} post={post} /> 
+                                    : null
+
+                        return <Post key={post._id} post={post} />
+                    })}
                 </div>
             </main>
          )

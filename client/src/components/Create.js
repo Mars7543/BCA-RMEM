@@ -5,6 +5,11 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { addPost } from '../actions/postActions'
 class Create extends Component {
+    static propTypes = {
+        actionComplete: PropTypes.bool,
+        error: PropTypes.object
+    }
+
     handleSubmit = e => {
         e.preventDefault()
 
@@ -18,12 +23,12 @@ class Create extends Component {
     render() { 
         return (
             <div className="create">
-                { this.props.createdPost && <Redirect to='/' /> }
+                { (this.props.actionComplete || ( this.props.error && this.props.error.msg === 'No token, authorization denied' )) && <Redirect to='/' /> }
                 
                 <h1 className="create__header">Create an Article</h1>
                 
                 <form className="create__form" onSubmit={this.handleSubmit}>
-                    { this.props.error && <p className="register__form_error">{this.props.error}</p> }
+                    { this.props.error && <p className="register__form_error">{this.props.error.msg}</p> }
                     <div className="create__form-group">
                         <label className="create__label" htmlFor="title">Title</label>
                         <input className="create__input" id="title" type="text" placeholder="Enter Title..."/>
@@ -53,14 +58,9 @@ class Create extends Component {
     }
 }
 
-Create.propTypes = {
-    createdPost: PropTypes.bool,
-    error: PropTypes.string
-}
-
 const mapStateToProps = state => ({
-    createdPost: state.post.createdPost,
-    error: state.post.error   
+    actionComplete: state.post.actionComplete,
+    error: state.error   
 })
 
 export default connect(mapStateToProps, { addPost })(Create)

@@ -1,6 +1,7 @@
 import axios from 'axios'
-import { GET_POSTS, GET_POST, ADD_POST, DELETE_POST, POSTS_LOADING, SHOW_ERROR } from './types'
+import { GET_POSTS, GET_POST, ADD_POST, EDIT_POST, DELETE_POST, POSTS_LOADING } from './types'
 import { tokenConfig } from './authActions'
+import { returnErrors } from './errorActions'
 
 export const getPosts = () => dispatch => {
     dispatch(setPostsLoading)
@@ -12,7 +13,7 @@ export const getPosts = () => dispatch => {
                 payload: res.data
             })
         )
-        .catch(err => dispatch(showError(err.response.data.msg)))
+        .catch(err => dispatch(returnErrors(err.response.data, err.response.status, 'POST_FETCH_FAIL')))
 }
 
 export const getPost = id => dispatch => {
@@ -25,14 +26,10 @@ export const getPost = id => dispatch => {
                 payload: res.data
             })
         )
-        .catch(err => dispatch(showError(err.response.data.msg)))
+        .catch(err => dispatch(returnErrors(err.response.data, err.response.status, 'POST_FETCH_FAIL')))
 }
 
 export const addPost = post => (dispatch, getState) => {
-    const { title, image, body } = post
-
-    if (!title || !image || !body) return dispatch(showError('Please Fill Out All Fields.'))
-
     axios
         .post('/api/posts', post, tokenConfig(getState))
         .then(res => 
@@ -41,22 +38,19 @@ export const addPost = post => (dispatch, getState) => {
                 payload: res.data
             })    
         )
-        .catch(err => dispatch(showError(err.response.data.msg)))
+        .catch(err => dispatch(returnErrors(err.response.data, err.response.status, 'POST_CREATE_FAIL')))
 }
-export const editPost = post => (dispatch, getState) => {
-    const { title, image, body } = post
 
-    if (!title || !image || !body) return dispatch(showError('Please Fill Out All Fields.'))
-
+export const editPost = (id, post) => (dispatch, getState) => {
     axios
-        .post('/api/posts', post, tokenConfig(getState))
-        .then(res => 
+        .put(`/api/posts/${id}`, post, tokenConfig(getState))
+        .then(res =>
             dispatch({
-                type: ADD_POST,
+                type: EDIT_POST,
                 payload: res.data
             })    
         )
-        .catch(err => dispatch(showError(err.response.data.msg)))
+        .catch(err => dispatch(returnErrors(err.response.data, err.response.status, 'POST_EDIT_FAIL')))
 }
 
 export const deletePost = id => (dispatch, getState) => {
@@ -68,14 +62,9 @@ export const deletePost = id => (dispatch, getState) => {
                 payload: { _id: id }
             })
         )
-        .catch(err => dispatch(showError(err.response.data.msg)))
+        .catch(err => dispatch(returnErrors(err.response.data, err.response.status, 'POST_DELETE_FAIL')))
 }
 
 export const setPostsLoading = () => ({
     type: POSTS_LOADING
-})
-
-export const showError = error => ({
-    type: SHOW_ERROR,
-    payload: error
 })

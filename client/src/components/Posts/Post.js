@@ -52,7 +52,8 @@ class Post extends Component {
 
                         {this.props.user && user.username === this.props.user.username &&
                             <div className="post__actions">
-                                <i onClick={this.handleDeletePost} className="post__info__icon-delete material-icons">delete</i>
+                                <Link to={`/edit/${id}`}><i title="Edit" className="post__info__icon-edit material-icons">edit</i></Link>
+                                <i title="Delete" onClick={this.handleDeletePost} className="post__info__icon-delete material-icons">delete</i>
                             </div>
                         }
                     </div>

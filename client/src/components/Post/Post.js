@@ -2,8 +2,15 @@ import React, { Component } from 'react'
 import { getPost } from '../../actions/postActions'
 import { connect } from 'react-redux'
 import moment from 'moment'
+import PropTypes from 'prop-types';
 class Post extends Component {
+    static propTypes = {
+        post: PropTypes.object,
+        getPost: PropTypes.func.isRequired
+    }
+
     componentDidMount() {
+        console.log(this.props)
         this.props.getPost(this.props.match.params.id)
     }
 
@@ -42,9 +49,11 @@ class Post extends Component {
 
                         <img className="full_post__image" src={image} alt="" />
                         
-                        { body.split('\n').map((paragraph, i) => 
-                            <p className="full_post__body" key={i}>{ paragraph }</p>
-                        )}
+                        <div className="full_post__body">
+                            { body.split('\n').map((paragraph, i) => 
+                                <p className="full_post__paragraph" key={i}>{ paragraph }</p>
+                            )}
+                        </div>
                     </div>
                 </div>
             )
@@ -53,5 +62,9 @@ class Post extends Component {
         return null
     }
 }
- 
-export default connect(null, { getPost })(Post)
+
+const mapStateToProps = state => ({
+    post: state.post.post
+})
+
+export default connect(mapStateToProps, { getPost })(Post)
